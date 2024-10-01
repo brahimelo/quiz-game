@@ -14,8 +14,8 @@ public class Question {
         return answer.length() % 2 == 0; // custom logic can be implemented in the future
     }
 
-    public boolean hasBeenAsked() {
-        return this.hasBeenAsked;
+    public boolean hasNotBeenAsked() {
+        return !this.hasBeenAsked;
     }
 
     public void setHasBeenAsked(boolean hasBeenAsked) {

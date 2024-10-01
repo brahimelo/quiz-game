@@ -1,17 +1,15 @@
 package org.brahim.question;
 
-import java.util.EnumMap;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class QuestionManager {
+public class QuestionDeckManager {
 
     private static final int NUMBER_OF_QUESTIONS = 50;
     private final EnumMap<Category, LinkedList<Question>> questions = new EnumMap<>(Category.class);
 
-    public QuestionManager() {
+    public QuestionDeckManager() {
         initQuestions();
     }
 
@@ -25,13 +23,21 @@ public class QuestionManager {
     }
 
     public Question getNextQuestion(Category category) {
-        return this.questions.get(category).stream()
-                .filter(question -> !question.hasBeenAsked())
+        LinkedList<Question> questionList = this.questions.getOrDefault(category, new LinkedList<>());
+
+        return questionList.stream()
+                .filter(Question::hasNotBeenAsked)
                 .findFirst()
+                .or(() -> {
+                    questionList.forEach(question -> question.setHasBeenAsked(false));
+                    return questionList.stream().findFirst();
+                })
                 .map(question -> {
                     question.setHasBeenAsked(true);
                     return question;
                 })
                 .orElseThrow(() -> new NoSuchElementException("No questions available for category: " + category));
     }
+
+
 }

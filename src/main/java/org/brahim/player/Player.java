@@ -20,17 +20,14 @@ public class Player {
 
     public void freeFromPenaltyBox() {
         this.isInPenaltyBox = false;
-        System.out.println("\uD83C\uDFF3\uFE0F- " + this.name + " is getting out of the penalty box");
     }
 
     public void moveToPenaltyBox() {
         this.isInPenaltyBox = true;
-        System.out.println("↩\uFE0F- " + this.name + " was sent to the penalty box");
     }
 
     public void earnGold() {
         this.goldCoins++;
-        System.out.println("\uD83E\uDE99- " + this.name + " now has " + this.goldCoins + " Gold Coin(s).");
     }
 
     public int getGoldCoins() {

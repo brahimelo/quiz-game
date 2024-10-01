@@ -52,4 +52,19 @@ public class PlayerManager {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
+
+    public void freePlayerFromPenaltyBox() {
+        this.currentPlayer.freeFromPenaltyBox();
+        System.out.println("\uD83C\uDFF3\uFE0F- " + this.currentPlayer.getName() + " is getting out of the penalty box");
+    }
+
+    public void movePlayerToPenaltyBox() {
+        this.currentPlayer.moveToPenaltyBox();
+        System.out.println("↩\uFE0F- " + this.currentPlayer.getName() + " was sent to the penalty box");
+    }
+
+    public void playerEarnGold() {
+        this.currentPlayer.earnGold();
+        System.out.println("\uD83E\uDE99- " + this.currentPlayer.getName() + " now has " + this.currentPlayer.getGoldCoins() + " Gold Coin(s).");
+    }
 }

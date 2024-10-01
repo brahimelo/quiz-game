@@ -4,7 +4,7 @@ import org.brahim.player.Player;
 import org.brahim.player.PlayerManager;
 import org.brahim.question.Category;
 import org.brahim.question.Question;
-import org.brahim.question.QuestionManager;
+import org.brahim.question.QuestionDeckManager;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -18,7 +18,7 @@ public class Game {
     private final Scanner scanner = new Scanner(System.in);
 
     private PlayerManager playerManager = new PlayerManager();
-    private QuestionManager questionManager = new QuestionManager();
+    private QuestionDeckManager questionDeckManager = new QuestionDeckManager();
 
     private boolean autoPlay = true;
 
@@ -43,7 +43,7 @@ public class Game {
 
     public void resetGame() {
         playerManager = new PlayerManager();
-        questionManager = new QuestionManager();
+        questionDeckManager = new QuestionDeckManager();
         status = GameStatus.INITIALIZING;
         System.out.println("\uD83D\uDD04- Game has been reset.");
     }
@@ -81,7 +81,7 @@ public class Game {
                 playerManager.advanceToNextPlayerTurn();
                 return;
             }
-            currentPlayer.freeFromPenaltyBox();
+            playerManager.freePlayerFromPenaltyBox();
         }
 
         playerManager.moveCurrentPlayer(roll);
@@ -89,7 +89,7 @@ public class Game {
 
         if (isAnswerCorrect) {
             System.out.println("\uD83D\uDFE2- Question was correctly answered !!");
-            currentPlayer.earnGold();
+            playerManager.playerEarnGold();
 
             if (playerManager.didPlayerWin()) {
                 this.status = GameStatus.FINISHED;
@@ -99,7 +99,7 @@ public class Game {
 
         } else {
             System.out.println("\uD83D\uDD34- Question was incorrectly answered !!");
-            currentPlayer.moveToPenaltyBox();
+            playerManager.movePlayerToPenaltyBox();
         }
 
         playerManager.advanceToNextPlayerTurn();
@@ -119,7 +119,7 @@ public class Game {
 
     private boolean askQuestion() {
         Category category = getCurrentCategory(playerManager.getCurrentPlayer().getPosition());
-        Question question = questionManager.getNextQuestion(category);
+        Question question = questionDeckManager.getNextQuestion(category);
         System.out.println("\uD83D\uDDE8\uFE0F- " + question);
         return isCorrectlyAnswered(question);
     }
